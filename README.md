@@ -1,5 +1,5 @@
 # Get the physical address of a virtual address of a process.
-[±M®×ºô¯¸](https://staff.csie.ncu.edu.tw/hsufh/COURSES/FALL2024/linux_project_1.html "±M®×ºô¯¸")
+[å°ˆæ¡ˆç¶²ç«™](https://staff.csie.ncu.edu.tw/hsufh/COURSES/FALL2024/linux_project_1.html "å°ˆæ¡ˆç¶²ç«™")
 
 ## Environment
 ```
@@ -8,18 +8,18 @@ ARCH: X86_64
 Source Version: 5.15.137
 ```
 
-## Linux ªº virtual address Âà physical address
+## Linux çš„ virtual address è½‰ physical address
 ![01](https://imgur.com/n9PrODm.png)  
 ![02](https://imgur.com/iPA3kPi.png)  
-> ³o¥|­Ó page table ¬°¡G
-> * ­¶¥ş°ì¥Ø¿ı (Page Global Directory)(PGD)
-> * ­¶¤W¯Å¥Ø¿ı (Page Upper Directory)(PUD)
-> * ­¶¤¤¯Å¥Ø¿ı (Page Middle Directory)(PMD)
-> * ­¶ªí (Page Table)(PTE)
-> ¨C¤@¯Å table ¦³3­Ó key description marco: shift, size, mask¡C  
-> PGD, PUD, PMD, PTE ·|¤À§O¥Ñ pgd_t, pud_t, pmd_t, pte_t ¨Ó°µ´y­z¡C  
+> é€™å››å€‹ page table ç‚ºï¼š
+> * é å…¨åŸŸç›®éŒ„ (Page Global Directory)(PGD)
+> * é ä¸Šç´šç›®éŒ„ (Page Upper Directory)(PUD)
+> * é ä¸­ç´šç›®éŒ„ (Page Middle Directory)(PMD)
+> * é è¡¨ (Page Table)(PTE)
+> æ¯ä¸€ç´š table æœ‰3å€‹ key description marco: shift, size, maskã€‚  
+> PGD, PUD, PMD, PTE æœƒåˆ†åˆ¥ç”± pgd_t, pud_t, pmd_t, pte_t ä¾†åšæè¿°ã€‚  
 
-### current «ü¼Ğ
+### current æŒ‡æ¨™
 <https://elixir.bootlin.com/linux/v5.15.137/source/arch/x86/include/asm/current.h>  
 ```c
 DECLARE_PER_CPU(struct task_struct *, current_task);
@@ -32,86 +32,86 @@ static __always_inline struct task_struct *get_current(void)
 #endif /* _ASM_X86_CURRENT_H */
 ```
 `#define current get_current()`
->current ¬O¤@­Ó macro¡A¥L³Q©w¸q¦b asm/current.h ¤º¡Ccurrent ¹ê»Ú¤W´N¬O get_current() ¨ç¼Æ¡C³o­Ó¨ç¦¡·|¦^¶Ç²{¦b CPU ©Ò°õ¦æ process ªº task_struct¡C  
+>current æ˜¯ä¸€å€‹ macroï¼Œä»–è¢«å®šç¾©åœ¨ asm/current.h å…§ã€‚current å¯¦éš›ä¸Šå°±æ˜¯ get_current() å‡½æ•¸ã€‚é€™å€‹å‡½å¼æœƒå›å‚³ç¾åœ¨ CPU æ‰€åŸ·è¡Œ process çš„ task_structã€‚  
 
->­º¥ı macro DECLARE_PER_CPU ªº§@¥Î¬O±N¤@­ÓÅÜ¼Æ³]©w¨ì¨C¤@­Ó CPU ¤º¡C  
->²Ä¤@¦æªº DECLARE_PER_CPU Åı§Ú­Ì¦³ struct task_struct* «¬ºAªº current_task ¥i¥H¥Î¡C  
->get_current() ¤º©Ò©I¥sªº this_cpu_read_stable(current_task) ¨ç¦¡¡A§@¥Î¬O±q CPU Åª¨ú current_task ÅÜ¼Æ¡C  
->§Ú­Ì«K¯à°÷¨Ï¥Î current ¨Ó®³¨ì·í«e process ªº task_struct ¤F¡C  
+>é¦–å…ˆ macro DECLARE_PER_CPU çš„ä½œç”¨æ˜¯å°‡ä¸€å€‹è®Šæ•¸è¨­å®šåˆ°æ¯ä¸€å€‹ CPU å…§ã€‚  
+>ç¬¬ä¸€è¡Œçš„ DECLARE_PER_CPU è®“æˆ‘å€‘æœ‰ struct task_struct* å‹æ…‹çš„ current_task å¯ä»¥ç”¨ã€‚  
+>get_current() å…§æ‰€å‘¼å«çš„ this_cpu_read_stable(current_task) å‡½å¼ï¼Œä½œç”¨æ˜¯å¾ CPU è®€å– current_task è®Šæ•¸ã€‚  
+>æˆ‘å€‘ä¾¿èƒ½å¤ ä½¿ç”¨ current ä¾†æ‹¿åˆ°ç•¶å‰ process çš„ task_struct äº†ã€‚  
 
-> current «ü¼Ğ¬°Àx¦s task ªº¦UºØ¸ê®Æ¥Îªº¡A¦Ó§Ú­Ì»İ­nªº¬O¸Ì­±ªº mm °Ñ¼Æ¡A¦Ó mm µ²ºc¼Ğ¥Ü¤F¤@­Ó Process ªº Memory ºŞ²z°T®§¡A¥]§t¡G  
-> * page table ¸ê°T  
-> * Stack, BSS, Data, Code¡K¬qªº¸ê°T  
+> current æŒ‡æ¨™ç‚ºå„²å­˜ task çš„å„ç¨®è³‡æ–™ç”¨çš„ï¼Œè€Œæˆ‘å€‘éœ€è¦çš„æ˜¯è£¡é¢çš„ mm åƒæ•¸ï¼Œè€Œ mm çµæ§‹æ¨™ç¤ºäº†ä¸€å€‹ Process çš„ Memory ç®¡ç†è¨Šæ¯ï¼ŒåŒ…å«ï¼š  
+> * page table è³‡è¨Š  
+> * Stack, BSS, Data, Codeâ€¦æ®µçš„è³‡è¨Š  
 
-## ¬yµ{
-1. `pgd_offset`: ®Ú¾Ú¥Ø«eªº Virtual Address ©M¥Ø«e Process ªº¸ê®Æµ²ºc task_struct¡A¦s¨ú¨ä¤¤ªº mm point¡C
-2. `mm point` ¤¤Àx¦sµÛ mm_struct ¦ì¸m¡A¦Ó mm_struct Àx¦s¸Ó Process µêÀÀ¦ì¸m¸ê®Æªºµ²ºc¡A¦b¸Óµ²ºc¤¤§Ú­Ì´N¥i¥H§ä¨ì pgd ªºªì©l¦ì¸m¡C¨Ï¥Î pgd_offset §Y¥i¦s¨ú pgd page ¤¤ªº pgd entry¡C   
-(entry ¤º®e¬° pud table ªº base address)
-3. `pud_offset`: ®Ú¾Ú³z¹L pgd_offset ±o¨ìªº pgd entry ©M Virtual Address¡A¥i±o¨ì pud entry¡C  
-(entry ¤º®e¬° pmd table ªº base address)
-4. `pmd_offset`: ®Ú¾Ú pud entry ªº¤º®e©M Virtual Address¡A¥i±o¨ì pte table ªº base address¡C
-5. `pte_offset`: ®Ú¾Ú pmd entry ªº¤º®e»P Virtual Address¡A¥i±o¨ì pte ªº base address¡C
-6. ±N±q pte ±o¨ìªº Base Address »P Mask(0xf¡Kfff000)°µ AND ¹Bºâ¡A§Y¥i±o¨ì Page ªº Base Physical Address¡C
-7. Virtual Address »P ~Mask(0x0¡K000fff)°µ AND ¹Bºâ±o¨ì offset¡A¦A»P Page ªº base Physical Address °µ OR ¹Bºâ§Y¥i±o¨ìÂà´«¹L«á¥B§¹¾ãªº Physical Address¡C
+## æµç¨‹
+1. `pgd_offset`: æ ¹æ“šç›®å‰çš„ Virtual Address å’Œç›®å‰ Process çš„è³‡æ–™çµæ§‹ task_structï¼Œå­˜å–å…¶ä¸­çš„ mm pointã€‚
+2. `mm point` ä¸­å„²å­˜è‘— mm_struct ä½ç½®ï¼Œè€Œ mm_struct å„²å­˜è©² Process è™›æ“¬ä½ç½®è³‡æ–™çš„çµæ§‹ï¼Œåœ¨è©²çµæ§‹ä¸­æˆ‘å€‘å°±å¯ä»¥æ‰¾åˆ° pgd çš„åˆå§‹ä½ç½®ã€‚ä½¿ç”¨ pgd_offset å³å¯å­˜å– pgd page ä¸­çš„ pgd entryã€‚   
+(entry å…§å®¹ç‚º pud table çš„ base address)
+3. `pud_offset`: æ ¹æ“šé€é pgd_offset å¾—åˆ°çš„ pgd entry å’Œ Virtual Addressï¼Œå¯å¾—åˆ° pud entryã€‚  
+(entry å…§å®¹ç‚º pmd table çš„ base address)
+4. `pmd_offset`: æ ¹æ“š pud entry çš„å…§å®¹å’Œ Virtual Addressï¼Œå¯å¾—åˆ° pte table çš„ base addressã€‚
+5. `pte_offset`: æ ¹æ“š pmd entry çš„å…§å®¹èˆ‡ Virtual Addressï¼Œå¯å¾—åˆ° pte çš„ base addressã€‚
+6. å°‡å¾ pte å¾—åˆ°çš„ Base Address èˆ‡ Mask(0xfâ€¦fff000)åš AND é‹ç®—ï¼Œå³å¯å¾—åˆ° Page çš„ Base Physical Addressã€‚
+7. Virtual Address èˆ‡ ~Mask(0x0â€¦000fff)åš AND é‹ç®—å¾—åˆ° offsetï¼Œå†èˆ‡ Page çš„ base Physical Address åš OR é‹ç®—å³å¯å¾—åˆ°è½‰æ›éå¾Œä¸”å®Œæ•´çš„ Physical Addressã€‚
 
-## °õ¦æµ²ªG - Question 1
+## åŸ·è¡Œçµæœ - Question 1
 ![03](https://imgur.com/3poTqPE.jpeg)  
 
-## Æ[¹îµ²ªG
-### 1. Before Fork (fork()¤§«eªº¿é¥X)
+## è§€å¯Ÿçµæœ
+### 1. Before Fork (fork()ä¹‹å‰çš„è¼¸å‡º)
 ![04](https://imgur.com/hc5z6dG.jpeg) 
--   **Virtual Address**¡G`0x563ab6a04010` ¬O¥ş°ìÅÜ¼Æ `global_a` ªº Virtual Address¡A§Y Process ¤º¦s¤¤ªº Logical Memory ¦ì¸m¡A¥Ñ¨t²Î¬°¸ÓÅÜ¼Æ¤À°t¡C
--   **Physical Address**¡G`0xcf696010` ¬O `global_a` ¹ïÀ³ªº Physical Address¡A§Y Physical Memory ªº¹ê»Ú¦sÀx¦a§}¡C
--   **PID**¡G`pid=4371` ¬O Parent Process ªº pid¡Aªí¥Ü·í«e¥¿¦b¹B¦æªº Parent Process¡C
+-   **Virtual Address**ï¼š`0x563ab6a04010` æ˜¯å…¨åŸŸè®Šæ•¸ `global_a` çš„ Virtual Addressï¼Œå³ Process å…§å­˜ä¸­çš„ Logical Memory ä½ç½®ï¼Œç”±ç³»çµ±ç‚ºè©²è®Šæ•¸åˆ†é…ã€‚
+-   **Physical Address**ï¼š`0xcf696010` æ˜¯ `global_a` å°æ‡‰çš„ Physical Addressï¼Œå³ Physical Memory çš„å¯¦éš›å­˜å„²åœ°å€ã€‚
+-   **PID**ï¼š`pid=4371` æ˜¯ Parent Process çš„ pidï¼Œè¡¨ç¤ºç•¶å‰æ­£åœ¨é‹è¡Œçš„ Parent Processã€‚
 
-¦b `fork()` ¤§«e¡AParent Process ¾Ö¦³ `global_a` ªº Virtual Address ©M¹ïÀ³ªº Physical Address¡C
+åœ¨ `fork()` ä¹‹å‰ï¼ŒParent Process æ“æœ‰ `global_a` çš„ Virtual Address å’Œå°æ‡‰çš„ Physical Addressã€‚
 
-### 2. After Fork by parent (fork()¤§«áªº¿é¥X)
+### 2. After Fork by parent (fork()ä¹‹å¾Œçš„è¼¸å‡º)
 ![05](https://imgur.com/M6fiGjS.jpeg) 
--   **Virtual Address ©M Physical Address ¨S¦³ÅÜ¤Æ**¡GParent Process ¦A¦¸Àò±o `global_a` ªº Virtual Address ©M Physical Address¡A³o¨âªÌ³£¨S¦³ÅÜ¤Æ¡C
--   **PID**¡G`pid=4371`¡AParent Process ªº pid ¤´µM¬O `pid=4371`¡C
+-   **Virtual Address å’Œ Physical Address æ²’æœ‰è®ŠåŒ–**ï¼šParent Process å†æ¬¡ç²å¾— `global_a` çš„ Virtual Address å’Œ Physical Addressï¼Œé€™å…©è€…éƒ½æ²’æœ‰è®ŠåŒ–ã€‚
+-   **PID**ï¼š`pid=4371`ï¼ŒParent Process çš„ pid ä»ç„¶æ˜¯ `pid=4371`ã€‚
 
-¦b `fork()` ¤§«á¡AParent Process ¤´µM¾Ö¦³¹ï `global_a` ªº±±¨î¡A¨Ã¥B¥¦ªº Virtual Address ©M¹ïÀ³ªº Physical Address «O«ù¤£ÅÜ¡A¥Nªí Parent Process ¨Ã¨S¦³¹ï `global_a` ¶i¦æ¥ô¦ó­×§ï¡C
+åœ¨ `fork()` ä¹‹å¾Œï¼ŒParent Process ä»ç„¶æ“æœ‰å° `global_a` çš„æ§åˆ¶ï¼Œä¸¦ä¸”å®ƒçš„ Virtual Address å’Œå°æ‡‰çš„ Physical Address ä¿æŒä¸è®Šï¼Œä»£è¡¨ Parent Process ä¸¦æ²’æœ‰å° `global_a` é€²è¡Œä»»ä½•ä¿®æ”¹ã€‚
 
-### 3. After Fork by child (fork()¤§«á¡Achild processªº¿é¥X)
+### 3. After Fork by child (fork()ä¹‹å¾Œï¼Œchild processçš„è¼¸å‡º)
 ![06](https://imgur.com/zqVVFJb.jpeg) 
-- **Virtual Address ¨S¦³ÅÜ¤Æ**¡GChild Process ¤¤ªº `global_a`  ªº Virtual Address ¤´µM¬O `0x563ab6a04010`¡C
-- **Physical Address ¨S¦³ÅÜ¤Æ**¡GChild Process ¤¤ªº `global_a` ¹ïÀ³ªº Physical Address ¤´µM¬O `0xcf696010`¡A»P Parent Process ¦@¨É¦P¤@­Ó Physical Address¡C
-- **PID**¡G`pid=4373`¡A³o¬O Child Process ªº pid¡C
+- **Virtual Address æ²’æœ‰è®ŠåŒ–**ï¼šChild Process ä¸­çš„ `global_a`  çš„ Virtual Address ä»ç„¶æ˜¯ `0x563ab6a04010`ã€‚
+- **Physical Address æ²’æœ‰è®ŠåŒ–**ï¼šChild Process ä¸­çš„ `global_a` å°æ‡‰çš„ Physical Address ä»ç„¶æ˜¯ `0xcf696010`ï¼Œèˆ‡ Parent Process å…±äº«åŒä¸€å€‹ Physical Addressã€‚
+- **PID**ï¼š`pid=4373`ï¼Œé€™æ˜¯ Child Process çš„ pidã€‚
 
-¦b `fork()` ¤§«á¡AChild Process Ä~©Ó¤F Parent Process ªº°O¾ĞÅéªÅ¶¡¡AParent Process »P Child Process ¦@¨É¬Û¦Pªº Virtual Address ©M Physical Address¡C³o¬O¦]¬°¦b `fork()` ¤§«á¡A¨â­Ó Process ¼È®É¦@¨É¬Û¦Pªº Physical Memory Page¡C
+åœ¨ `fork()` ä¹‹å¾Œï¼ŒChild Process ç¹¼æ‰¿äº† Parent Process çš„è¨˜æ†¶é«”ç©ºé–“ï¼ŒParent Process èˆ‡ Child Process å…±äº«ç›¸åŒçš„ Virtual Address å’Œ Physical Addressã€‚é€™æ˜¯å› ç‚ºåœ¨ `fork()` ä¹‹å¾Œï¼Œå…©å€‹ Process æš«æ™‚å…±äº«ç›¸åŒçš„ Physical Memory Pageã€‚
 
-### 4. Test Copy on Write in child (Ä²µoCoW®É¡Achild process ªº¿é¥X)
+### 4. Test Copy on Write in child (è§¸ç™¼CoWæ™‚ï¼Œchild process çš„è¼¸å‡º)
 ![07](https://imgur.com/20LVLdV.jpeg) 
-- **Virtual Address ¨S¦³ÅÜ¤Æ**¡GChild Process ¤¤ªº `global_a` ªº Virtual Address ¤´µM¬O`0x563ab6a04010`¡C
-- **Physical Address µo¥ÍÅÜ¤Æ**¡G·í Child Process ­×§ï¤F `global_a` ªº­È«á¡A¹ïÀ³ªº Physical Address ÅÜ¦¨¤F`0x7001d010`¡Aªí¥ÜÄ²µo¤F **Copy-on-Write¡]CoW¡^¾÷¨î**¡C
-- **PID**¡G`pid=4373`¡A³o¬O Child Process ªº pid¡C
+- **Virtual Address æ²’æœ‰è®ŠåŒ–**ï¼šChild Process ä¸­çš„ `global_a` çš„ Virtual Address ä»ç„¶æ˜¯`0x563ab6a04010`ã€‚
+- **Physical Address ç™¼ç”Ÿè®ŠåŒ–**ï¼šç•¶ Child Process ä¿®æ”¹äº† `global_a` çš„å€¼å¾Œï¼Œå°æ‡‰çš„ Physical Address è®Šæˆäº†`0x7001d010`ï¼Œè¡¨ç¤ºè§¸ç™¼äº† **Copy-on-Writeï¼ˆCoWï¼‰æ©Ÿåˆ¶**ã€‚
+- **PID**ï¼š`pid=4373`ï¼Œé€™æ˜¯ Child Process çš„ pidã€‚
 
-¦b Child Process ¤¤¡A·í `global_a` ³Q­×§ï®É¡ALinux ªº Copy-on-Write Ä²µo¡AKernel ·|¬° Child Process ¤À°t¤@­Ó·sªº Physical Address¡A³o¼Ë Parent Process ©M Child Process ¤£¦A¦@¨É¦P¤@­Ó Physical Memory Page¡C¦]¦¹ Child Process ªº Physical Address ÅÜ¦¨¤F`0x7001d010`¡C  
+åœ¨ Child Process ä¸­ï¼Œç•¶ `global_a` è¢«ä¿®æ”¹æ™‚ï¼ŒLinux çš„ Copy-on-Write è§¸ç™¼ï¼ŒKernel æœƒç‚º Child Process åˆ†é…ä¸€å€‹æ–°çš„ Physical Addressï¼Œé€™æ¨£ Parent Process å’Œ Child Process ä¸å†å…±äº«åŒä¸€å€‹ Physical Memory Pageã€‚å› æ­¤ Child Process çš„ Physical Address è®Šæˆäº†`0x7001d010`ã€‚  
 
 ### What is Copy-on-Write?
--   `fork()` «á Parent Process ©M Child Process ¦@¨É Physical Memory¡G¦b `fork()` ½Õ¥Î¤§«á¡AParent Process ©M Child Process ¦@¨É¬Û¦Pªº Virtual Address »P Physical Memory ¦Ó¸`¬Ù¸ê·½¡A¦]¬°¦pªG°O¾ĞÅé¨S¦³³Q­×§ï¡A¥¦­Ì¥i¥H¦@¨É¬Û¦Pªº Physical Page¡C
--   **Ä²µoCow**¡G·í Child Process ¹Á¸Õ­×§ï¦@¨Éªº Memory Page¡]¨Ò¦p `global_a`¡^®É¡AKernel ·|¤À°t¤@­Ó·sªº Physical Page¡A³o¼Ë Parent Process ©M Child Process ´N·|¤À§O¾Ö¦³¦Û¤v¿W¥ßªº Physical Memory¡C³o­Ó¹Lµ{¥s°µ==¼g¤J®É½Æ»s¡]Copy-on-Write, CoW¡^==¡C¦Ó Virtual Address «O«ù¤£ÅÜ¡C
--   **Virtual Address «O«ù¤£ÅÜ**¡G¤£ºŞ¬O Parent Process  ÁÙ¬O Child Process¡A­×§ï `global_a` ®É¡A¥¦­Ìªº Virtual Address ³£¤£·|ÅÜ¤Æ¡CÅÜ¤Æªº¬O³o­Ó Virtual Address ©Ò¹ïÀ³ªº Physical Address¡C
+-   `fork()` å¾Œ Parent Process å’Œ Child Process å…±äº« Physical Memoryï¼šåœ¨ `fork()` èª¿ç”¨ä¹‹å¾Œï¼ŒParent Process å’Œ Child Process å…±äº«ç›¸åŒçš„ Virtual Address èˆ‡ Physical Memory è€Œç¯€çœè³‡æºï¼Œå› ç‚ºå¦‚æœè¨˜æ†¶é«”æ²’æœ‰è¢«ä¿®æ”¹ï¼Œå®ƒå€‘å¯ä»¥å…±äº«ç›¸åŒçš„ Physical Pageã€‚
+-   **è§¸ç™¼Cow**ï¼šç•¶ Child Process å˜—è©¦ä¿®æ”¹å…±äº«çš„ Memory Pageï¼ˆä¾‹å¦‚ `global_a`ï¼‰æ™‚ï¼ŒKernel æœƒåˆ†é…ä¸€å€‹æ–°çš„ Physical Pageï¼Œé€™æ¨£ Parent Process å’Œ Child Process å°±æœƒåˆ†åˆ¥æ“æœ‰è‡ªå·±ç¨ç«‹çš„ Physical Memoryã€‚é€™å€‹éç¨‹å«åš==å¯«å…¥æ™‚è¤‡è£½ï¼ˆCopy-on-Write, CoWï¼‰==ã€‚è€Œ Virtual Address ä¿æŒä¸è®Šã€‚
+-   **Virtual Address ä¿æŒä¸è®Š**ï¼šä¸ç®¡æ˜¯ Parent Process  é‚„æ˜¯ Child Processï¼Œä¿®æ”¹ `global_a` æ™‚ï¼Œå®ƒå€‘çš„ Virtual Address éƒ½ä¸æœƒè®ŠåŒ–ã€‚è®ŠåŒ–çš„æ˜¯é€™å€‹ Virtual Address æ‰€å°æ‡‰çš„ Physical Addressã€‚
 
-## °õ¦æµ²ªG - Question 2
+## åŸ·è¡Œçµæœ - Question 2
 ![08](https://imgur.com/bmV7MVv.jpeg)
 
-## Æ[¹îµ²ªG
-- Virtual Address¡G`0x560b703a7040` ¬O `a[0]` ªºVirtual Address¡C
-- Physical Address¡G`0x6bf04040` ¬O `a[0]` ¹ïÀ³ªºPhysical Address¡C
+## è§€å¯Ÿçµæœ
+- Virtual Addressï¼š`0x560b703a7040` æ˜¯ `a[0]` çš„Virtual Addressã€‚
+- Physical Addressï¼š`0x6bf04040` æ˜¯ `a[0]` å°æ‡‰çš„Physical Addressã€‚
 
 ### The address translation of a[1999999] failed: cannot get physical address.
-- Virtual Address¡G`0x560b704823c` ¬O `a[1999999]` ªºVirtual Address¡C
-- Physical Address¡G`(nil)` ªí¥Ü§AµLªkÀò¨ú `a[1999999]` ªº Physical Address¡C
+- Virtual Addressï¼š`0x560b704823c` æ˜¯ `a[1999999]` çš„Virtual Addressã€‚
+- Physical Addressï¼š`(nil)` è¡¨ç¤ºä½ ç„¡æ³•ç²å– `a[1999999]` çš„ Physical Addressã€‚
 
-### ¬°¤°»ò a[1999999]·|Âà§}¥¢±Ñ?
-- **Lazy Allocation**¡G
-Linux ¨t²Î¬°¤F¸`¬Ù°O¾ĞÅé©M´£°ª®Ä¯à¡A·|¨Ï¥Î **Lazy Allocation**¡C¨t²Î¦bµ{¦¡¤À°t¤F°O¾ĞÅé«á¡A¹ê»Ú¤W¨Ã¤£·|¥ß§Y¤À°t Physical Memory¡Aª½¨ì³o¬q°O¾ĞÅé¯u¥¿³Q³X°İ¡]¨Ò¦pÅª¼g¾Ş§@¡^¡APhysical Memory ¤~·|³Q¤À°t¡C
-- **¬°¤°»ò `a[1999999]` ¥¢±Ñ**¡G
-ÁöµM¤À°t¤F¤@­Ó¤j°}¦C `int a[2000000]`¡A¦ı³o¨Ã¤£¥Nªí¨C­Ó¤¸¯À³£·|¥ß§Y¦³¹ïÀ³ªº Physical Memory Allocation¡C®Ú¾Ú Lazy Allocation¡A¥u¦³·í§A¯u¥¿³X°İ¬Y­Ó¤¸¯À®É¡A¨t²Î¤~·|±N¸Ó Virtual Address ¬M®g¨ì Physical Address¡C
+### ç‚ºä»€éº¼ a[1999999]æœƒè½‰å€å¤±æ•—?
+- **Lazy Allocation**ï¼š
+Linux ç³»çµ±ç‚ºäº†ç¯€çœè¨˜æ†¶é«”å’Œæé«˜æ•ˆèƒ½ï¼Œæœƒä½¿ç”¨ **Lazy Allocation**ã€‚ç³»çµ±åœ¨ç¨‹å¼åˆ†é…äº†è¨˜æ†¶é«”å¾Œï¼Œå¯¦éš›ä¸Šä¸¦ä¸æœƒç«‹å³åˆ†é… Physical Memoryï¼Œç›´åˆ°é€™æ®µè¨˜æ†¶é«”çœŸæ­£è¢«è¨ªå•ï¼ˆä¾‹å¦‚è®€å¯«æ“ä½œï¼‰ï¼ŒPhysical Memory æ‰æœƒè¢«åˆ†é…ã€‚
+- **ç‚ºä»€éº¼ `a[1999999]` å¤±æ•—**ï¼š
+é›–ç„¶åˆ†é…äº†ä¸€å€‹å¤§é™£åˆ— `int a[2000000]`ï¼Œä½†é€™ä¸¦ä¸ä»£è¡¨æ¯å€‹å…ƒç´ éƒ½æœƒç«‹å³æœ‰å°æ‡‰çš„ Physical Memory Allocationã€‚æ ¹æ“š Lazy Allocationï¼Œåªæœ‰ç•¶ä½ çœŸæ­£è¨ªå•æŸå€‹å…ƒç´ æ™‚ï¼Œç³»çµ±æ‰æœƒå°‡è©² Virtual Address æ˜ å°„åˆ° Physical Addressã€‚
 
-## ¦pªG¦³³X°İ `a[0]` ©Î `a[1999999]`
+## å¦‚æœæœ‰è¨ªå• `a[0]` æˆ– `a[1999999]`
 ```c
     a[0] = 10;
 
@@ -128,20 +128,20 @@ Linux ¨t²Î¬°¤F¸`¬Ù°O¾ĞÅé©M´£°ª®Ä¯à¡A·|¨Ï¥Î **Lazy Allocation**¡C¨t²Î¦bµ{¦¡¤À°t¤F
     printf("========================================================================\n"); 
 ```
 ![09](https://imgur.com/a3LRAuW.jpeg)
-- Virtual Address¡G`0x55f058221040` ¬O `a[0]` ªº Virtual Address¡C
-- Physical Address¡G`0x6956f040` ¬O `a[0]` ¹ïÀ³ªº Physical Address¡C
+- Virtual Addressï¼š`0x55f058221040` æ˜¯ `a[0]` çš„ Virtual Addressã€‚
+- Physical Addressï¼š`0x6956f040` æ˜¯ `a[0]` å°æ‡‰çš„ Physical Addressã€‚
 
 ### The address translation of a[1999999] successed.
-- Virtual Address¡G`0x55f0589c223c` ¬O `a[1999999]` ªº Virtual Address¡C
-- Physical Address¡G`0x2ffc423c` ¬O `a[1999999]` ¹ïÀ³ªº Physical Address¡C
+- Virtual Addressï¼š`0x55f0589c223c` æ˜¯ `a[1999999]` çš„ Virtual Addressã€‚
+- Physical Addressï¼š`0x2ffc423c` æ˜¯ `a[1999999]` å°æ‡‰çš„ Physical Addressã€‚
 
-### ¬°¤°»ò¨C¦¸°õ¦æµ{¦¡®É¡AVirtual Address ©M Physical Address ·|§ïÅÜ?
-- **¦ì§}ªÅ¶¡²ÕºAÀH¾÷¸ü¤J (ASLR - Address Space Layout Randomization)**¡G
-ASLR ¬O¤@ºØ¨¾½d¥D°O¾ĞÅé·lÃaº|¬}³Q§Q¥Îªº¹q¸£¦w¥ş§Ş³N¡C¨C¦¸µ{¦¡°õ¦æ®É¡A¨t²Î·|ÀH¾÷¤À°t Virtual Address¡A³o¼Ë§ğÀ»ªÌµLªk§Q¥Î©T©wªº Address ¨Ó¶i¦æ§ğÀ»¡C²{¥N§@·~¨t²Î¤@¯ë³£¥[³]³o¤@¾÷¨î¡A¥H¨¾½d´c·Nµ{¦¡¹ï¤wª¾¦ì§}¶i¦æ `Return-to-libc` §ğÀ»¡C
-¦]¦¹´Nºâµ{¦¡¤¤ªºÅÜ¼Æ¦ì¸m¬O©T©wªº¡]¦p `a[0]` ©M `a[1999999]`¡^¡A¨C¦¸°õ¦æ®É¥¦­Ìªº Virtual Address ³£·|¦³©Ò¤£¦P¡C
-- **Physical Address**: ¥Ñ§@·~¨t²Îªº `¥D°O¾ĞÅéºŞ²z³æ¤¸ (MMU)` ­t³d¤À°t¡A®Ú¾Ú·í«e¨t²Îªº¥i¥Î°O¾ĞÅéª¬ºA¨Ó°ÊºA¨M©w¡C©Ò¥H§Y¨Ï Virtual Address «O«ù¤£ÅÜ¡A¤£¦P®É¨èªº memory allocation ±¡ªp¤]·|¾É­PÅÜ¼Æ¹ïÀ³ªº Physical Address ¤£¦P¡C
+### ç‚ºä»€éº¼æ¯æ¬¡åŸ·è¡Œç¨‹å¼æ™‚ï¼ŒVirtual Address å’Œ Physical Address æœƒæ”¹è®Š?
+- **ä½å€ç©ºé–“çµ„æ…‹éš¨æ©Ÿè¼‰å…¥ (ASLR - Address Space Layout Randomization)**ï¼š
+ASLR æ˜¯ä¸€ç¨®é˜²ç¯„ä¸»è¨˜æ†¶é«”æå£æ¼æ´è¢«åˆ©ç”¨çš„é›»è…¦å®‰å…¨æŠ€è¡“ã€‚æ¯æ¬¡ç¨‹å¼åŸ·è¡Œæ™‚ï¼Œç³»çµ±æœƒéš¨æ©Ÿåˆ†é… Virtual Addressï¼Œé€™æ¨£æ”»æ“Šè€…ç„¡æ³•åˆ©ç”¨å›ºå®šçš„ Address ä¾†é€²è¡Œæ”»æ“Šã€‚ç¾ä»£ä½œæ¥­ç³»çµ±ä¸€èˆ¬éƒ½åŠ è¨­é€™ä¸€æ©Ÿåˆ¶ï¼Œä»¥é˜²ç¯„æƒ¡æ„ç¨‹å¼å°å·²çŸ¥ä½å€é€²è¡Œ `Return-to-libc` æ”»æ“Šã€‚
+å› æ­¤å°±ç®—ç¨‹å¼ä¸­çš„è®Šæ•¸ä½ç½®æ˜¯å›ºå®šçš„ï¼ˆå¦‚ `a[0]` å’Œ `a[1999999]`ï¼‰ï¼Œæ¯æ¬¡åŸ·è¡Œæ™‚å®ƒå€‘çš„ Virtual Address éƒ½æœƒæœ‰æ‰€ä¸åŒã€‚
+- **Physical Address**: ç”±ä½œæ¥­ç³»çµ±çš„ `ä¸»è¨˜æ†¶é«”ç®¡ç†å–®å…ƒ (MMU)` è² è²¬åˆ†é…ï¼Œæ ¹æ“šç•¶å‰ç³»çµ±çš„å¯ç”¨è¨˜æ†¶é«”ç‹€æ…‹ä¾†å‹•æ…‹æ±ºå®šã€‚æ‰€ä»¥å³ä½¿ Virtual Address ä¿æŒä¸è®Šï¼Œä¸åŒæ™‚åˆ»çš„ memory allocation æƒ…æ³ä¹Ÿæœƒå°è‡´è®Šæ•¸å°æ‡‰çš„ Physical Address ä¸åŒã€‚
 
-## ¦pªG¨Ì§Ç¥h³X°İ¡A·|¦b¬Æ»ò®É­Ô§ì¤£¨ì Physical Address?
+## å¦‚æœä¾åºå»è¨ªå•ï¼Œæœƒåœ¨ç”šéº¼æ™‚å€™æŠ“ä¸åˆ° Physical Address?
 ```c
     for(int i = 0; i <= 1999999; i++){
         phy_add=my_get_physical_addresses(&a[i]);
@@ -149,27 +149,24 @@ ASLR ¬O¤@ºØ¨¾½d¥D°O¾ĞÅé·lÃaº|¬}³Q§Q¥Îªº¹q¸£¦w¥ş§Ş³N¡C¨C¦¸µ{¦¡°õ¦æ®É¡A¨t²Î·|ÀH¾÷¤
         printf("Offest of logical address:[%p]   Physical address:[%p]\n", &a[i], phy_add);              
         printf("========================================================================\n"); 
         if(phy_add == NULL){
-            printf("¦b i == %d ®É·|§ì¤£¨ì Physical Address\n", i);
+            printf("åœ¨ i == %d æ™‚æœƒæŠ“ä¸åˆ° Physical Address\n", i);
             break;
         }
     }
 ```
 ![10](https://imgur.com/lsyIftR.jpg)  
-·|¦b `i == 1008` ®É§ì¤£¨ì Physical Address¡C
+æœƒåœ¨ `i == 1008` æ™‚æŠ“ä¸åˆ° Physical Addressã€‚
 
-### ¬°¤°»ò·|¦b i µ¥©ó 1008 ®É§ì¤£¨ì Physical Address?
-- **¨t²Î Memory Page ¤j¤p©M int ¤j¤pªºÃö«Y:**
-Memory Page ªº¤j¤p¬° 4 KB¡]4096 bytes¡^¡C°²³]¨C­Ó int ¬O 4 bytes¡A¨º»ò¤@­Ó Page ¥i¥H®e¯Ç¡G
+### ç‚ºä»€éº¼æœƒåœ¨ i ç­‰æ–¼ 1008 æ™‚æŠ“ä¸åˆ° Physical Address?
+- **ç³»çµ± Memory Page å¤§å°å’Œ int å¤§å°çš„é—œä¿‚:**
+Memory Page çš„å¤§å°ç‚º 4 KBï¼ˆ4096 bytesï¼‰ã€‚å‡è¨­æ¯å€‹ int æ˜¯ 4 bytesï¼Œé‚£éº¼ä¸€å€‹ Page å¯ä»¥å®¹ç´ï¼š
 ```
-4096 / 4 = 1024 ­Ó int
+4096 / 4 = 1024 å€‹ int
 ```
-³o¥NªíµÛ 1024 ­Ó int ¼Æ¾Ú­è¦n¶ñº¡¤@­Ó Physical Memory Page¡C
+é€™ä»£è¡¨è‘— 1024 å€‹ int æ•¸æ“šå‰›å¥½å¡«æ»¿ä¸€å€‹ Physical Memory Pageã€‚
 
-- Lazy Allocation ©M Page Faults:
-§@·~¨t²Î®Ú¾Ú Lazy Allocation¡APhysical Memory Page ¥u·|¦b»İ­n®É¤~¤À°t¡C·íµ{¦¡³X°İ `a[i]` ®É¡A¨t²Î·|®Ú¾Ú»İ­n¤À°t¹ïÀ³ªº Physical Page¡C¦ı³o¨Ç¤À°t¬O®Ú¾Ú­¶¡]Page¡^³æ¦ì¶i¦æªº¡A¦Ó¤£¬O³æ­ÓÅÜ¼Æ¡C
-- ·í³X°İ `a[0]` ¨ì `a[1007]` ®É¡A³o¨Ç¤¸¯À¥i¯à¤w¸g¦b¦P¤@­Ó 4 KB ªº­¶¤¤¡A¦]¦¹¨t²Î¯à°÷¬°¥¦­Ì¤À°t¨Ã¦¨¥\Àò¨ú Physical Address¡C
-- ¦ı¬O·í³X°İ¨ì `a[1008]` ®É¡A¥¦¦ì©ó¤U¤@­Ó Memory Page ¤¤¡]`a[1008]` ¦ì©ó 4 KB ¤§«áªº°O¾ĞÅé¡^³o®É¨t²Î»İ­n¤À°t·sªº Physical Memory Page¡C¦pªG¨t²Î¥X²{°O¾ĞÅé¤£¨¬©Î¥¼¯à¦¨¥\¤À°t¸Ó­¶¡A´N·|¾É­PµLªkÀò¨ú¸Ó Virtual Address ©Ò¹ïÀ³ªº Physical Address¡C
-- ¦]¦¹·í `i == 1008` ®É§ì¤£¨ì Physical Address¡A«Ü¥i¯à¬O¦]¬°³o­Ó¤¸¯À«ê¦n¸¨¦b¬Y­Ó Page ªºÃä¬É¡A¦Ó¨t²Î¦b¤À°t¤U¤@­Ó Physical Page ®É¥X²{¤F°İÃD¡C
-
----
-[µ§°Oºô¯¸](https://hackmd.io/@Jyen024/HkcfEMtpkl)
+- Lazy Allocation å’Œ Page Faults:
+ä½œæ¥­ç³»çµ±æ ¹æ“š Lazy Allocationï¼ŒPhysical Memory Page åªæœƒåœ¨éœ€è¦æ™‚æ‰åˆ†é…ã€‚ç•¶ç¨‹å¼è¨ªå• `a[i]` æ™‚ï¼Œç³»çµ±æœƒæ ¹æ“šéœ€è¦åˆ†é…å°æ‡‰çš„ Physical Pageã€‚ä½†é€™äº›åˆ†é…æ˜¯æ ¹æ“šé ï¼ˆPageï¼‰å–®ä½é€²è¡Œçš„ï¼Œè€Œä¸æ˜¯å–®å€‹è®Šæ•¸ã€‚
+- ç•¶è¨ªå• `a[0]` åˆ° `a[1007]` æ™‚ï¼Œé€™äº›å…ƒç´ å¯èƒ½å·²ç¶“åœ¨åŒä¸€å€‹ 4 KB çš„é ä¸­ï¼Œå› æ­¤ç³»çµ±èƒ½å¤ ç‚ºå®ƒå€‘åˆ†é…ä¸¦æˆåŠŸç²å– Physical Addressã€‚
+- ä½†æ˜¯ç•¶è¨ªå•åˆ° `a[1008]` æ™‚ï¼Œå®ƒä½æ–¼ä¸‹ä¸€å€‹ Memory Page ä¸­ï¼ˆ`a[1008]` ä½æ–¼ 4 KB ä¹‹å¾Œçš„è¨˜æ†¶é«”ï¼‰é€™æ™‚ç³»çµ±éœ€è¦åˆ†é…æ–°çš„ Physical Memory Pageã€‚å¦‚æœç³»çµ±å‡ºç¾è¨˜æ†¶é«”ä¸è¶³æˆ–æœªèƒ½æˆåŠŸåˆ†é…è©²é ï¼Œå°±æœƒå°è‡´ç„¡æ³•ç²å–è©² Virtual Address æ‰€å°æ‡‰çš„ Physical Addressã€‚
+- å› æ­¤ç•¶ `i == 1008` æ™‚æŠ“ä¸åˆ° Physical Addressï¼Œå¾ˆå¯èƒ½æ˜¯å› ç‚ºé€™å€‹å…ƒç´ æ°å¥½è½åœ¨æŸå€‹ Page çš„é‚Šç•Œï¼Œè€Œç³»çµ±åœ¨åˆ†é…ä¸‹ä¸€å€‹ Physical Page æ™‚å‡ºç¾äº†å•é¡Œã€‚
